@@ -214,7 +214,6 @@ class LUC_AVLTree {
      *  Additionally, as this method returns through recursion, it
      *   1. re-adjusts the 'height' variable in each ancestor's node. And,
      *   2. returns the current node. If a rotation is done, then this top node
-     *      will change. This allows, through recursion, the invoker to readjust 
      *      the parent's child pointer to this returned node.
      *
      *  @param value - the value to insert below node
@@ -361,22 +360,73 @@ class LUC_AVLTree {
          * code for each. You can also look at the method InsertElement, as it has do
          * do many of the same things as this method.
          */
-//        if (node == null){
-//            return null;
-//        }
-//        if (node.leftChild != null) {
-//            deleteElement(value, node.leftChild);
-//        }
-//        else if (node.rightChild != null) {
-//            deleteElement(value, node.rightChild);
-//        }
-//        else{
-//
-//        }
+        if (node == null) {
+            return node;
+        }
 
 
+        if (value < node.value) {
+            node.leftChild = deleteElement(value, node.leftChild);
+        } else if (value > node.value) {
+            node.rightChild = deleteElement(value, node.rightChild);
+        } else {
+
+            if ((node.leftChild == null) || (node.rightChild == null)) {
+                Node temp = null;
+                if (temp == node.leftChild) {
+                    temp = node.rightChild;
+                } else {
+                    temp = node.leftChild;
+                }
+
+                if (temp == null) {
+                    temp = node;
+                    node = null;
+                } else {
+                    node = temp;
+                }
+            } else {
+                Node temp = minValueNode(node.rightChild);
+
+
+                node.value = temp.value;
+
+
+                node.rightChild = deleteElement(temp.value, node.rightChild);
+            }
+        }
+
+
+        if (node == null) {
+            return node;
+        }
+
+
+        node.height = getMaxHeight(getHeight(node.leftChild), getHeight(node.rightChild)) + 1;
+
+        int balance = getBalanceFactor(node);
+
+
+        if (balance > 1 && getBalanceFactor(node.leftChild) >= 0) {
+            return LLRotation(node);
+        }
+
+        if (balance > 1 && getBalanceFactor(node.leftChild) < 0) {
+            node.leftChild = RRRotation(node.leftChild);
+            return LLRotation(node);
+        }
+
+        if (balance < -1 && getBalanceFactor(node.rightChild) <= 0) {
+            return RRRotation(node);
+        }
+
+        if (balance < -1 && getBalanceFactor(node.rightChild) > 0) {
+            node.rightChild = LLRotation(node.rightChild);
+            return RRRotation(node);
+        }
 
         return node;
+
     }
 
 
