@@ -1,6 +1,6 @@
 
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Jacob Marison / 272 002 ***
  *
  * This java file is a Java object implementing simple AVL Tree.
  * You are to complete the deleteElement method.
@@ -268,7 +268,7 @@ class LUC_AVLTree {
 
             // Check bf and if a RR or RL Rotation is needed
             if (Math.abs(bf) > 1 ) {
-                // Re-balance needed, check if inserted to the right or 
+                // Re-balance needed, check if inserted to the right or
                 // left of child.
                 if (value > node.rightChild.value)
                     node = RRRotation(node);
@@ -361,6 +361,20 @@ class LUC_AVLTree {
          * code for each. You can also look at the method InsertElement, as it has do
          * do many of the same things as this method.
          */
+//        if (node == null){
+//            return null;
+//        }
+//        if (node.leftChild != null) {
+//            deleteElement(value, node.leftChild);
+//        }
+//        else if (node.rightChild != null) {
+//            deleteElement(value, node.rightChild);
+//        }
+//        else{
+//
+//        }
+
+
 
         return node;
     }
